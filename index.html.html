@@ -1,0 +1,701 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Inquiry | Every Answer Is A Question In Itself</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        /* Base styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        :root {
+            --black: #000000;
+            --white: #FFFFFF;
+            --gray: #1A1A1A;
+            --light-gray: #2A2A2A;
+            --cosmic-blue: #0a1128;
+        }
+        
+        body {
+            background-color: var(--black);
+            color: var(--white);
+            font-family: 'Inter', sans-serif;
+            line-height: 1.6;
+            overflow-x: hidden;
+            position: relative;
+            min-height: 100vh;
+        }
+        
+        /* Cosmic background */
+        .cosmic-background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -2;
+            overflow: hidden;
+            background: linear-gradient(to bottom, #000000, #020420, #000000);
+        }
+        
+        .star {
+            position: absolute;
+            background-color: white;
+            border-radius: 50%;
+            opacity: 0;
+            animation: twinkle 5s infinite;
+        }
+        
+        @keyframes twinkle {
+            0% { opacity: 0; }
+            50% { opacity: 1; }
+            100% { opacity: 0; }
+        }
+        
+        .shooting-star {
+            position: absolute;
+            height: 2px;
+            background: linear-gradient(90deg, white, transparent);
+            opacity: 0;
+        }
+        
+        /* Nebula elements */
+        .nebula {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(40px);
+            opacity: 0.1;
+        }
+        
+        /* Header styles */
+        header {
+            padding: 3rem 2rem 1rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .logo-container {
+            position: relative;
+            display: inline-block;
+        }
+        
+        .logo {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 4.5rem;
+            font-weight: 600;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            margin-bottom: 0.5rem;
+            position: relative;
+            display: inline-block;
+            cursor: default;
+            background: linear-gradient(90deg, var(--white), #aaa, var(--white));
+            background-size: 200% 100%;
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: shimmer 8s infinite linear;
+        }
+        
+        @keyframes shimmer {
+            0% { background-position: 200% 0; }
+            100% { background-position: -200% 0; }
+        }
+        
+        .logo::after {
+            content: "";
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 100%;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--white), transparent);
+            transform: scaleX(0);
+            transform-origin: right;
+            transition: transform 0.8s ease;
+        }
+        
+        .logo:hover::after {
+            transform: scaleX(1);
+            transform-origin: left;
+        }
+        
+        .tagline {
+            font-family: 'Cormorant Garamond', serif;
+            font-style: italic;
+            font-size: 1.1rem;
+            font-weight: 300;
+            letter-spacing: 0.15em;
+            margin-bottom: 3rem;
+            opacity: 0.8;
+            position: relative;
+            display: inline-block;
+        }
+        
+        .tagline::before, .tagline::after {
+            content: "•";
+            margin: 0 0.75rem;
+            opacity: 0.5;
+        }
+        
+        /* Featured section */
+        .featured-section {
+            padding: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(10px);
+            border-radius: 8px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        }
+        
+        .section-title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 2rem;
+            font-weight: 500;
+            margin-bottom: 2.5rem;
+            text-align: center;
+            letter-spacing: 0.1em;
+            position: relative;
+            display: inline-block;
+            left: 50%;
+            transform: translateX(-50%);
+            cursor: pointer;
+            transition: all 0.4s ease;
+        }
+        
+        .section-title:hover {
+            letter-spacing: 0.15em;
+        }
+        
+        .section-title::after {
+            content: "";
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            width: 100%;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--white), transparent);
+            transition: all 0.4s ease;
+        }
+        
+        .section-title:hover::after {
+            background: linear-gradient(90deg, transparent, var(--white), var(--white), transparent);
+        }
+        
+        /* Card styles */
+        .inquiry-card {
+            background-color: var(--gray);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 2px;
+            padding: 3rem;
+            margin-bottom: 3rem;
+            position: relative;
+            overflow: hidden;
+            transition: transform 0.5s ease, box-shadow 0.5s ease;
+            cursor: pointer;
+        }
+        
+        .inquiry-card::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(255,255,255,0.05) 0%, transparent 70%);
+            pointer-events: none;
+        }
+        
+        .inquiry-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+        }
+        
+        .card-header {
+            margin-bottom: 2rem;
+            position: relative;
+        }
+        
+        .card-title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 2.5rem;
+            font-weight: 600;
+            line-height: 1.2;
+            margin-bottom: 1rem;
+            letter-spacing: 0.02em;
+            transition: all 0.4s ease;
+        }
+        
+        .inquiry-card:hover .card-title {
+            letter-spacing: 0.03em;
+        }
+        
+        .card-meta {
+            font-size: 0.9rem;
+            opacity: 0.7;
+            letter-spacing: 0.05em;
+            display: flex;
+            gap: 1.5rem;
+        }
+        
+        .card-content {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            position: relative;
+        }
+        
+        .card-content p {
+            margin-bottom: 1.5rem;
+            transition: transform 0.3s ease;
+        }
+        
+        .inquiry-card:hover .card-content p {
+            transform: translateX(5px);
+        }
+        
+        .card-content p:first-of-type::first-letter {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 3.5rem;
+            font-weight: 600;
+            float: left;
+            line-height: 1;
+            margin-right: 0.5rem;
+            margin-top: 0.3rem;
+            background: linear-gradient(135deg, var(--white), #aaa);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            transition: all 0.4s ease;
+        }
+        
+        .inquiry-card:hover .card-content p:first-of-type::first-letter {
+            transform: scale(1.1);
+        }
+        
+        /* Interactive question mark */
+        .interactive-element {
+            position: absolute;
+            right: 2rem;
+            top: 2rem;
+            width: 40px;
+            height: 40px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.5rem;
+            font-weight: 700;
+            opacity: 0.5;
+            transition: all 0.4s ease;
+            cursor: pointer;
+        }
+        
+        .interactive-element:hover {
+            opacity: 1;
+            transform: scale(1.2) rotate(180deg);
+            background-color: var(--white);
+            color: var(--black);
+        }
+        
+        /* Social links */
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin: 4rem 0;
+        }
+        
+        .social-link {
+            color: var(--white);
+            font-size: 1.2rem;
+            text-decoration: none;
+            padding: 0.75rem 1.5rem;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 2px;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .social-link::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: all 0.6s ease;
+        }
+        
+        .social-link:hover::before {
+            left: 100%;
+        }
+        
+        .social-link:hover {
+            background-color: var(--white);
+            color: var(--black);
+            transform: translateY(-2px);
+        }
+        
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 3rem 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            font-size: 0.9rem;
+            opacity: 0.7;
+            letter-spacing: 0.05em;
+            position: relative;
+        }
+        
+        footer::before {
+            content: "?";
+            position: absolute;
+            bottom: 1rem;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 8rem;
+            opacity: 0.03;
+            font-family: 'Cormorant Garamond', serif;
+            font-weight: 700;
+            pointer-events: none;
+        }
+        
+        /* Text selection style */
+        ::selection {
+            background: var(--white);
+            color: var(--black);
+        }
+        
+        /* Scrollbar styling */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        
+        ::-webkit-scrollbar-track {
+            background: var(--black);
+        }
+        
+        ::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 4px;
+        }
+        
+        ::-webkit-scrollbar-thumb:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+        
+        /* Responsive design */
+        @media (max-width: 768px) {
+            .logo {
+                font-size: 3rem;
+            }
+            
+            .inquiry-card {
+                padding: 2rem;
+            }
+            
+            .card-title {
+                font-size: 2rem;
+            }
+            
+            .card-content p:first-of-type::first-letter {
+                font-size: 2.5rem;
+            }
+            
+            .interactive-element {
+                right: 1rem;
+                top: 1rem;
+                width: 30px;
+                height: 30px;
+                font-size: 1.2rem;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            header {
+                padding: 2rem 1rem 1rem;
+            }
+            
+            .logo {
+                font-size: 2.5rem;
+            }
+            
+            .tagline {
+                font-size: 0.9rem;
+            }
+            
+            .featured-section {
+                padding: 1rem;
+            }
+            
+            .inquiry-card {
+                padding: 1.5rem;
+            }
+            
+            .card-title {
+                font-size: 1.8rem;
+            }
+            
+            .social-links {
+                flex-direction: column;
+                align-items: center;
+                gap: 1rem;
+            }
+            
+            .card-meta {
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Cosmic background -->
+    <div class="cosmic-background" id="cosmicBackground"></div>
+    
+    <!-- Header with logo -->
+    <header>
+        <div class="logo-container">
+            <h1 class="logo">THE INQUIRY</h1>
+            <div class="tagline">Every Answer Is A Question In Itself</div>
+        </div>
+    </header>
+    
+    <!-- Featured section -->
+    <section class="featured-section">
+        <h2 class="section-title">Featured Inquiry</h2>
+        
+        <!-- Inquiry card -->
+        <div class="inquiry-card">
+            <div class="interactive-element">?</div>
+            
+            <div class="card-header">
+                <h3 class="card-title">THE MYTH OF "I AM ENOUGH FOR MYSELF." </h3>
+                <div class="card-meta">
+                    <span>Husnain Asad Aulakh</span>
+                    <span>August 27, 2025</span>
+                    <span>Ideas</span>
+                </div>
+            </div>
+            
+           <div class="card-content">
+  <p>A friend once asked me, "Tell me something stupid," and I said, "I am enough for myself." It was stupid.</p>
+
+  <p>The idea of absolute self-reliance, of living in complete independence and isolation, is utterly intriguing and increasingly popular. Maybe I am one of them, who, when asked what sucks the most, say "People." Who dream of spending our lives on a remote island, in a desert, in the mountains, or even on Mars. We think about marrying at 45 or not marrying at all. Because the very idea of individualism gives us a sense of prestige, a sense of difference, and a sense of being better than others. And we humans crave this sense.</p>
+
+  <p>So, the inquiry is, are we actually enough for ourselves? The answer is No; with one very tiny exception that we shall address later.</p>
+
+  <p>You see, this universe does not support individualism. Neither does this Earth, and neither do we humans. Everything here is interconnected in such a way that a negligible change in one tiny thing can cause a change of unimaginable magnitude in another. A change in ocean temperature on one side of the globe alters storm patterns on another. Humans are not designed to be alone; in fact, no creature is. We humans believe we are different, self-aware, godlike, sovereign but the cosmos doesn't care.</p>
+
+  <p>Our existence is the product of a cosmic collaboration that began billions of years ago. The universe itself is a network of gravitational pulls and quantum entanglements, a web where no particle is ever truly independent. Nothing in the universe exists in eternal isolation. Even the most solitary entities are bound to forces larger than themselves: gravity, time, entropy. To think one can, stand apart from all else is to forget the basic law of existence: everything belongs to something greater.</p>
+
+  <p>On this Earth, every breath we take is a gift from the photosynthesis of a plant. We are biological beings built for exchange; of oxygen, of nutrients, of energy. To withdraw from this exchange is to deny our own biology.</p>
+
+  <p>Now one can argue that by being “Enough for me” they mean “Socially”. But it would be more stupid than the previous claim. Our brains are not wired for absolute isolation. From the moment we are born, we are designed to connect. Mirror neurons in our brains fire not only when we perform an action but when we see someone else perform it, creating the very foundation of empathy and learning. Studies on solitary confinement, which is the forced implementation of "I am enough for myself," show it to be one of the most devastating psychological tortures imaginable, it routinely shatters the human mind, causing hallucinations, panic attacks, and a disintegration of the self.</p>
+
+  <p>The mind, without another to reflect against, loses its shape. We define ourselves in relation to others. Without a "you," there ultimately is no "I."</p>
+
+  <p>To run away, then, is not bravery but a kind of cowardice. It is easier to flee from society than to wrestle with it daily. Easier to imagine oneself in mountains than to live among people whose flaws, noise, and chaos grind against us. Absolute isolation is not heroic.</p>
+
+  <p>This is not to say that isolation cannot produce sparks of greatness. Yes, a human can choose isolation. Humanity has always drawn from those who endure solitude. But such solitude is nor fashionable neither romantic. We can try to be enough for ourselves, inspired by the examples of hermits like Dr. Friedrich Ritter or certain ascetic saints. But we must see the price paid. Saint Simeon Stylites lived atop a pillar for 37 years, but his isolation was a performance for the crowds below, a paradox that proves the rule. Dr Iqbal, the biggest preacher of “Self” warned us by saying “Stay attached to the tree, have hope for the spring”. Individualism demands absolute loyalty to a single cause and that isolation eventually eats us alive.</p>
+
+  <p>Robinson Crusoe, the poster child for isolation, was saved not by his solitude but by the tools and scraps he salvaged from the collective world he left behind. His story is one of survival, not fulfillment. Mary Shelley's Frankenstein is a masterpiece on the horror of isolation. The monster is not born evil; he is made monstrous by a world that rejects him, that denies him connection. His rage is the direct result of being forced to be "enough for himself."</p>
+
+  <p>I do not intend to claim that we should never be alone or never seek self-reliance. My argument is against the illusion of absolute independence because this fashionable desire will neither make us great nor leave us sane if we don't have the courage to burn ourselves alive. All the loneliness of isolation without any of its claimed purity.</p>
+
+  <p>The myth of absolute self-sufficiency is a seductive and dangerous lie. To believe otherwise is to wage a war against our own nature, a war we are built to lose. The answer is found not in isolation, but in the courage to choose our connections wisely.</p>
+
+  <p>And if, after all this, one still possesses the superhuman courage to willingly pay the price, to endure the absolute solitude until the self dissolves into the infinite, then one would have to overcome biology, psychology, and cosmology alike, to stop needing touch, story, recognition, memory. To live not as a human, but as a god and God if there is any doesn't like partners.</p>
+
+  <p>From the draft of the book;</p>
+  <p>“The Conscious Being” by “Husnain Asad Aulakh”.</p>
+</div>
+
+        </div>
+    </section>
+    
+    <!-- Social links -->
+    <div class="social-links">
+        <a href="https://www.instagram.com/husnain_asad_aulakh?igsh=YWVrNWF5OXAwZHVh" class="social-link" target="_blank">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+            </svg>
+            Instagram
+        </a>
+        <a href="https://x.com/HusnainAulakh72?t=pHTJnSVRVJkBo7Oy20WbvQ&s=09" class="social-link" target="_blank">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M24 4.557c-.883.392-1.832.656-2.828.775 1.017-.609 1.798-1.574 2.165-2.724-.951.564-2.005.974-3.127 1.195-.897-.957-2.178-1.555-3.594-1.555-3.179 0-5.515 2.966-4.797 6.045-4.091-.205-7.719-2.165-10.148-5.144-1.29 2.213-.669 5.108 1.523 6.574-.806-.026-1.566-.247-2.229-.616-.054 2.281 1.581 4.415 3.949 4.89-.693.188-1.452.232-2.224.084.626 1.956 2.444 3.379 4.6 3.419-2.07 1.623-4.678 2.348-7.29 2.04 2.179 1.397 4.768 2.212 7.548 2.212 9.142 0 14.307-7.721 13.995-14.646.962-.695 1.797-1.562 2.457-2.549z"/>
+            </svg>
+            Twitter
+        </a>
+    </div>
+    
+    <!-- Footer -->
+    <footer>
+        <p>© 2023 THE INQUIRY. Every Answer Is A Question In Itself.</p>
+    </footer>
+    
+    <!-- JavaScript for animations -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Create cosmic background with stars
+            const cosmicBg = document.getElementById('cosmicBackground');
+            
+            // Create stars with varying sizes and animation delays
+            for (let i = 0; i < 200; i++) {
+                const star = document.createElement('div');
+                star.classList.add('star');
+                
+                const size = Math.random() * 3;
+                star.style.width = `${size}px`;
+                star.style.height = `${size}px`;
+                
+                star.style.left = `${Math.random() * 100}%`;
+                star.style.top = `${Math.random() * 100}%`;
+                
+                // Random animation delay for twinkling effect
+                star.style.animationDelay = `${Math.random() * 5}s`;
+                
+                cosmicBg.appendChild(star);
+            }
+            
+            // Create shooting stars
+            function createShootingStar() {
+                const shootingStar = document.createElement('div');
+                shootingStar.classList.add('shooting-star');
+                
+                const startX = Math.random() * 100;
+                const startY = Math.random() * 30;
+                const length = Math.random() * 100 + 50;
+                
+                shootingStar.style.left = `${startX}%`;
+                shootingStar.style.top = `${startY}%`;
+                shootingStar.style.width = `${length}px`;
+                
+                cosmicBg.appendChild(shootingStar);
+                
+                // Animate shooting star
+                const angle = Math.random() * 60 - 30;
+                shootingStar.style.transform = `rotate(${angle}deg)`;
+                
+                shootingStar.animate(
+                    [
+                        { opacity: 0, transform: `rotate(${angle}deg) translateX(0)` },
+                        { opacity: 1, transform: `rotate(${angle}deg) translateX(-${length*2}px)` },
+                        { opacity: 0, transform: `rotate(${angle}deg) translateX(-${length*4}px)` }
+                    ],
+                    {
+                        duration: 2000,
+                        easing: 'ease-out'
+                    }
+                ).onfinish = () => {
+                    cosmicBg.removeChild(shootingStar);
+                };
+            }
+            
+            // Create shooting stars at intervals
+            setInterval(createShootingStar, 3000);
+            
+            // Create nebula elements
+            for (let i = 0; i < 5; i++) {
+                const nebula = document.createElement('div');
+                nebula.classList.add('nebula');
+                
+                const size = Math.random() * 500 + 200;
+                nebula.style.width = `${size}px`;
+                nebula.style.height = `${size}px`;
+                
+                nebula.style.left = `${Math.random() * 100}%`;
+                nebula.style.top = `${Math.random() * 100}%`;
+                
+                const colors = ['#0a1128', '#1c2c5c', '#3a0ca3', '#4361ee'];
+                nebula.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                
+                cosmicBg.appendChild(nebula);
+            }
+            
+            // Parallax effect on scroll
+            window.addEventListener('scroll', () => {
+                const scrollY = window.scrollY;
+                cosmicBg.style.transform = `translateY(${scrollY * 0.2}px)`;
+            });
+            
+            // Add subtle mouse move effect to the card
+            const card = document.querySelector('.inquiry-card');
+            
+            if (card) {
+                card.addEventListener('mousemove', function(e) {
+                    const x = e.clientX;
+                    const y = e.clientY;
+                    const rect = card.getBoundingClientRect();
+                    const xPos = (x - rect.left) / rect.width - 0.5;
+                    const yPos = (y - rect.top) / rect.height - 0.5;
+                    
+                    card.style.transform = `translateY(-5px) rotateY(${xPos * 2}deg) rotateX(${yPos * -2}deg)`;
+                    
+                    // Parallax effect for the interactive element
+                    const interactiveEl = card.querySelector('.interactive-element');
+                    interactiveEl.style.transform = `translate(${xPos * -5}px, ${yPos * -5}px)`;
+                });
+                
+                card.addEventListener('mouseleave', function() {
+                    card.style.transform = 'translateY(0) rotateY(0) rotateX(0)';
+                    
+                    // Reset interactive element position
+                    const interactiveEl = card.querySelector('.interactive-element');
+                    interactiveEl.style.transform = 'translate(0, 0)';
+                });
+            }
+            
+            // Interactive element click effect
+            const interactiveEl = document.querySelector('.interactive-element');
+            if (interactiveEl) {
+                interactiveEl.addEventListener('click', function() {
+                    this.style.transform = 'scale(1.5) rotate(360deg)';
+                    this.style.opacity = '1';
+                    this.style.backgroundColor = 'var(--white)';
+                    this.style.color = 'var(--black)';
+                    
+                    setTimeout(() => {
+                        this.style.transform = '';
+                        this.style.opacity = '';
+                        this.style.backgroundColor = '';
+                        this.style.color = '';
+                    }, 1000);
+                });
+            }
+            
+            // Text selection animation
+            const paragraphs = document.querySelectorAll('.card-content p');
+            paragraphs.forEach(p => {
+                p.addEventListener('click', function() {
+                    this.style.backgroundColor = 'rgba(255, 255, 255, 0.1)';
+                    this.style.transition = 'background-color 0.5s ease';
+                    
+                    setTimeout(() => {
+                        this.style.backgroundColor = '';
+                    }, 1000);
+                });
+            });
+        });
+    </script>
+</body>
+</html>
